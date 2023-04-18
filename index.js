@@ -52,7 +52,7 @@ app.get("/unassign", async function (request, response) {
   const result = await client
     .db("assign")
     .collection("student")
-    .find({ mentor: false }, { id: 1, name: 1, _id: 0 })
+    .find({ mentor: false }, {projection:{ id: 1, name: 1, _id: 0 }})
     .toArray();
   result.length > 0
     ? response.send(result)
@@ -73,7 +73,7 @@ app.get("/mentor/:id", async function (request, response) {
     result = await client
       .db("assign")
       .collection("student")
-      .find({ mentor_name: mentor.name }, { _id: 0, name: 1 })
+      .find({ mentor_name: mentor.name }, {projection:{ _id: 0, name: 1 }})
       .toArray();
     if (result.length > 0) {
       response.send(result);
